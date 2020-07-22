@@ -21,7 +21,6 @@ export default createGlobalStyle`
     h1, h2, h3, h4, h5, h6, p,
     text {
         font-family: sans-serif;
-        color:white;
     }
 
     html, body {
@@ -59,10 +58,6 @@ export default createGlobalStyle`
     }
     body {
         line-height: 1;
-        display: flex;
-        justify-content:center;
-        align-items:center;
-        background-color:#1a1a1a;
     }
     ol, ul {
         list-style: none;

@@ -12,7 +12,7 @@ const UserInput = styled.input`
   padding: 8px;
   caret-color: #ff00ff;
   color: white;
-  margin-bottom: 20px;
+  line-height: 50px;
 `;
 
 const ClearBtn = styled.button`
@@ -20,8 +20,8 @@ const ClearBtn = styled.button`
   color: white;
   font-weight: bold;
   border-radius: 3px;
-  padding: 7px 16px;
   height: 35px;
+  width: 90px;
   display: inline-block;
   margin-left: 10px;
   border: white 2px solid;
@@ -35,14 +35,27 @@ const ClearBtn = styled.button`
   }
 `;
 
-const Wrapper = styled.div`
-  margin-top: 20px;
+const FormWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100px;
+  background-color: #1a1a1a;
+`;
+const BtnWrapper = styled.div`
+  display: inline-block;
   position: relative;
+  height: 37px;
+  width: 90px;
+`;
+const List = styled.ul`
   display: flex;
   flex-flow: column wrap;
   align-items: center;
+  padding: 10px;
+  margin : 20px auto ;
 `;
-
 const Typeahead = ({ suggestions, handleSelect }) => {
   const [userInput, setUserInput] = React.useState("");
 
@@ -58,18 +71,20 @@ const Typeahead = ({ suggestions, handleSelect }) => {
   const listMatchedSuggestions = matchedSuggestions(userInput);
 
   return (
-    <Wrapper>
-      <div>
+    <>
+      <FormWrapper>
         <UserInput
           type="text"
           onChange={(e) => setUserInput(e.target.value)}
           value={userInput}
         />
-        <ClearBtn onClick={(e) => setUserInput("")}>Clear</ClearBtn>
-      </div>
+        <BtnWrapper>
+          <ClearBtn onClick={(e) => setUserInput("")}>Clear</ClearBtn>
+        </BtnWrapper>
+      </FormWrapper>
 
       {listMatchedSuggestions.length > 0 && (
-        <ul>
+        <List>
           {listMatchedSuggestions.map((matchedSuggestion) => (
             <Suggestion
               key={matchedSuggestion.id}
@@ -77,9 +92,9 @@ const Typeahead = ({ suggestions, handleSelect }) => {
               handleSelect={handleSelect}
             />
           ))}
-        </ul>
+        </List>
       )}
-    </Wrapper>
+    </>
   );
 };
 
