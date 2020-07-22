@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 const ListItem = styled.li`
   cursor: pointer;
-  margin: 5px 0;
   text-align: center;
+  padding: 5px 5px;
   &:hover {
-    color: #ff00ff;
+    background-color: #ff00ff;
   }
 `;
 

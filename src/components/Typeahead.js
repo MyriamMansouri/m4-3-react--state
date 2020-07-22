@@ -55,6 +55,8 @@ const Typeahead = ({ suggestions, handleSelect }) => {
     return [];
   };
 
+  const listMatchedSuggestions = matchedSuggestions(userInput);
+
   return (
     <Wrapper>
       <div>
@@ -66,15 +68,17 @@ const Typeahead = ({ suggestions, handleSelect }) => {
         <ClearBtn onClick={(e) => setUserInput("")}>Clear</ClearBtn>
       </div>
 
-      <ul>
-        {matchedSuggestions(userInput).map((matchedSuggestion) => (
-          <Suggestion
-            key={matchedSuggestion.id}
-            matchedSuggestion={matchedSuggestion}
-            handleSelect={handleSelect}
-          />
-        ))}
-      </ul>
+      {listMatchedSuggestions.length > 0 && (
+        <ul>
+          {listMatchedSuggestions.map((matchedSuggestion) => (
+            <Suggestion
+              key={matchedSuggestion.id}
+              matchedSuggestion={matchedSuggestion}
+              handleSelect={handleSelect}
+            />
+          ))}
+        </ul>
+      )}
     </Wrapper>
   );
 };

@@ -62,7 +62,7 @@ export default createGlobalStyle`
         display: flex;
         justify-content:center;
         align-items:center;
-        background-color:black;
+        background-color:#1a1a1a;
     }
     ol, ul {
         list-style: none;
