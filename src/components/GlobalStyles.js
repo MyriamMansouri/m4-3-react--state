@@ -58,6 +58,9 @@ export default createGlobalStyle`
     }
     body {
         line-height: 1;
+        display: flex;
+        justify-content:center;
+        align-items:center;
     }
     ol, ul {
         list-style: none;
