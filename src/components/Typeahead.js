@@ -1,4 +1,5 @@
 import React from "react";
+import Suggestion from "./Suggestion";
 import styled from "styled-components";
 
 const UserInput = styled.input`
@@ -7,10 +8,11 @@ const UserInput = styled.input`
   height: 37px;
   border: solid 1px white;
   background-color: inherit;
-  width: 250px;
+  width: 270px;
   padding: 8px;
   caret-color: #ff00ff;
   color: white;
+  margin-bottom: 20px;
 `;
 
 const ClearBtn = styled.button`
@@ -36,26 +38,43 @@ const ClearBtn = styled.button`
 const Wrapper = styled.div`
   margin-top: 20px;
   position: relative;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
 `;
 
 const Typeahead = ({ suggestions, handleSelect }) => {
   const [userInput, setUserInput] = React.useState("");
 
-  const handleKeyDown = (key) => {
-    if (key === "Enter") {
-      alert(userInput);
+  const matchedSuggestions = (input) => {
+    if (input.length > 1) {
+      return suggestions.filter((suggestion) =>
+        suggestion.title.toLowerCase().includes(input)
+      );
     }
+    return [];
   };
 
   return (
     <Wrapper>
-      <UserInput
-        type="text"
-        onChange={(e) => setUserInput(e.target.value)}
-        onKeyDown={(e) => handleKeyDown(e.key)}
-        value={userInput}
-      />
-      <ClearBtn onClick={(e) => setUserInput("")}>Clear</ClearBtn>
+      <div>
+        <UserInput
+          type="text"
+          onChange={(e) => setUserInput(e.target.value)}
+          value={userInput}
+        />
+        <ClearBtn onClick={(e) => setUserInput("")}>Clear</ClearBtn>
+      </div>
+
+      <ul>
+        {matchedSuggestions(userInput).map((matchedSuggestion) => (
+          <Suggestion
+            key={matchedSuggestion.id}
+            matchedSuggestion={matchedSuggestion}
+            handleSelect={handleSelect}
+          />
+        ))}
+      </ul>
     </Wrapper>
   );
 };
