@@ -5,9 +5,12 @@ const UserInput = styled.input`
   border-radius: 3px;
   display: inline-block;
   height: 37px;
-  border: solid 1px;
+  border: solid 1px white;
+  background-color: inherit;
   width: 250px;
   padding: 8px;
+  caret-color: #ff00ff;
+  color: white;
 `;
 
 const ClearBtn = styled.button`
@@ -19,8 +22,8 @@ const ClearBtn = styled.button`
   height: 35px;
   display: inline-block;
   margin-left: 10px;
-  border: black 2px solid;
-  box-shadow: 0 3px 0 0 black;
+  border: white 2px solid;
+  box-shadow: 0 3px 0 0 white;
   outline: none;
   user-select: none;
   position: absolute;
@@ -52,7 +55,7 @@ const Typeahead = ({ suggestions, handleSelect }) => {
         onKeyDown={(e) => handleKeyDown(e.key)}
         value={userInput}
       />
-      <ClearBtn onClick={(e) => setUserInput('')}>Clear</ClearBtn>
+      <ClearBtn onClick={(e) => setUserInput("")}>Clear</ClearBtn>
     </Wrapper>
   );
 };
