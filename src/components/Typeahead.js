@@ -60,6 +60,7 @@ const Typeahead = ({ suggestions, handleSelect }) => {
   const [userInput, setUserInput] = React.useState("");
 
   const matchedSuggestions = (input) => {
+
     if (input.length > 1) {
       return suggestions.filter((suggestion) =>
         suggestion.title.toLowerCase().includes(input)
@@ -69,7 +70,6 @@ const Typeahead = ({ suggestions, handleSelect }) => {
   };
 
   const listMatchedSuggestions = matchedSuggestions(userInput);
-
   return (
     <>
       <FormWrapper>
@@ -89,6 +89,7 @@ const Typeahead = ({ suggestions, handleSelect }) => {
             <Suggestion
               key={matchedSuggestion.id}
               matchedSuggestion={matchedSuggestion}
+              userInput={userInput}
               handleSelect={handleSelect}
             />
           ))}

@@ -10,10 +10,26 @@ const ListItem = styled.li`
   }
 `;
 
-const Suggestion = ({ matchedSuggestion, handleSelect }) => {
+const Prediction = styled.span`
+  font-weight: bold;
+`;
+
+const boldPrediction = (suggestion, input) => {
+  const title = suggestion.title
+  const index = title.toLowerCase().indexOf(input);
+  const firstHalf = title.slice(0, index + input.length);
+  const secondHalf = title.slice(index + input.length);
+  return { firstHalf, secondHalf };
+};
+
+const Suggestion = ({ matchedSuggestion, handleSelect, userInput }) => {
+  const { firstHalf, secondHalf } = boldPrediction(
+    matchedSuggestion,
+    userInput
+  );
+
   return (
     <ListItem
-      
       onClick={(e) => handleSelect(matchedSuggestion.title)}
       onKeyDown={(e) => {
         if (e.key === "Enter") {
@@ -21,7 +37,8 @@ const Suggestion = ({ matchedSuggestion, handleSelect }) => {
         }
       }}
     >
-      {matchedSuggestion.title}
+      {firstHalf}
+      <Prediction>{secondHalf}</Prediction>
     </ListItem>
   );
 };
