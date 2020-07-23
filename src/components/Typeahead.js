@@ -54,13 +54,18 @@ const List = styled.ul`
   flex-flow: column wrap;
   align-items: center;
   padding: 10px;
-  margin : 20px auto ;
+  margin: 20px auto;
+  max-width: 700px;
+  box-shadow: 2px 4px 39px 0px rgba(211, 197, 214, 0.92);
+  border-radius: 8px;
 `;
 const Typeahead = ({ suggestions, handleSelect }) => {
   const [userInput, setUserInput] = React.useState("");
+  const [selectedSuggestionIndex, setSelectedSuggestionIndex] = React.useState(
+    0
+  );
 
   const matchedSuggestions = (input) => {
-
     if (input.length > 1) {
       return suggestions.filter((suggestion) =>
         suggestion.title.toLowerCase().includes(input)
@@ -77,6 +82,32 @@ const Typeahead = ({ suggestions, handleSelect }) => {
           type="text"
           onChange={(e) => setUserInput(e.target.value)}
           value={userInput}
+          onKeyDown={(e) => {
+            switch (e.key) {
+              case "Enter": {
+                handleSelect(e.target.value);
+                return;
+              }
+              case "ArrowUp": {
+                if (selectedSuggestionIndex - 1 > -1) {
+                  setSelectedSuggestionIndex(selectedSuggestionIndex - 1);
+                }
+                return;
+              }
+              case "ArrowDown": {
+                if (
+                  selectedSuggestionIndex + 1 <
+                  listMatchedSuggestions.length
+                ) {
+                  setSelectedSuggestionIndex(selectedSuggestionIndex + 1);
+                }
+                return;
+              }
+              default: {
+                return;
+              }
+            }
+          }}
         />
         <BtnWrapper>
           <ClearBtn onClick={(e) => setUserInput("")}>Clear</ClearBtn>
@@ -85,12 +116,15 @@ const Typeahead = ({ suggestions, handleSelect }) => {
 
       {listMatchedSuggestions.length > 0 && (
         <List>
-          {listMatchedSuggestions.map((matchedSuggestion) => (
+          {listMatchedSuggestions.map((matchedSuggestion, index) => (
             <Suggestion
               key={matchedSuggestion.id}
               matchedSuggestion={matchedSuggestion}
               userInput={userInput}
               handleSelect={handleSelect}
+              isSelected={selectedSuggestionIndex === index ? true : false}
+              setSelectedSuggestionIndex={setSelectedSuggestionIndex}
+              index={index}
             />
           ))}
         </List>
