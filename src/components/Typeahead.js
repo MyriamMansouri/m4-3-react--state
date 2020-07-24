@@ -65,7 +65,7 @@ const Typeahead = ({ suggestions, handleSelect }) => {
     0
   );
   const [toggleDropdown, setToggleDropdown] = React.useState(false);
-
+  const input = React.useRef();
   const matchedSuggestions = (input) => {
     if (input.length > 1) {
       return suggestions.filter((suggestion) =>
@@ -90,7 +90,7 @@ const Typeahead = ({ suggestions, handleSelect }) => {
           onKeyDown={(e) => {
             switch (e.key) {
               case "Enter": {
-                handleSelect(e.target.value);
+                handleSelect(listMatchedSuggestions[selectedSuggestionIndex].title );
                 return;
               }
               case "ArrowUp": {
@@ -108,10 +108,7 @@ const Typeahead = ({ suggestions, handleSelect }) => {
                 }
                 return;
               }
-              case "Escape": {
-                setToggleDropdown(false);
-                return;
-              }
+
               default: {
                 return;
               }
@@ -127,6 +124,7 @@ const Typeahead = ({ suggestions, handleSelect }) => {
         <List>
           {listMatchedSuggestions.map((matchedSuggestion, index) => (
             <Suggestion
+              ref={input}
               key={matchedSuggestion.id}
               matchedSuggestion={matchedSuggestion}
               userInput={userInput}

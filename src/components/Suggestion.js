@@ -53,15 +53,23 @@ const Suggestion = ({
     userInput
   );
 
+ 
+
   return (
     <ListItem
+    
       style={{
         background: isSelected ? "#e0d7df" : "transparent",
       }}
-      onClick={() => handleSelect(matchedSuggestion.title)}
-      onMouseEnter={() => setSelectedSuggestionIndex(index)}
+      onClick={(e) => {
+        handleSelect(matchedSuggestion.title);
+      }}
+      onMouseEnter={(e) => {
+        e.target.focus();
+        setSelectedSuggestionIndex(index);
+      }}
     >
-      <button>
+      <button>  
         {firstHalf}
         <Prediction>{secondHalf}</Prediction> &nbsp;
         <Genre>
@@ -71,9 +79,5 @@ const Suggestion = ({
     </ListItem>
   );
 };
-
-
-
-
 
 export default Suggestion;
