@@ -64,6 +64,7 @@ const Typeahead = ({ suggestions, handleSelect }) => {
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = React.useState(
     0
   );
+  const [toggleDropdown, setToggleDropdown] = React.useState(false);
 
   const matchedSuggestions = (input) => {
     if (input.length > 1) {
@@ -74,13 +75,17 @@ const Typeahead = ({ suggestions, handleSelect }) => {
     return [];
   };
 
-  const listMatchedSuggestions = matchedSuggestions(userInput);
+  let listMatchedSuggestions = matchedSuggestions(userInput);
+
   return (
     <>
       <FormWrapper>
         <UserInput
           type="text"
-          onChange={(e) => setUserInput(e.target.value)}
+          onChange={(e) => {
+            if (!toggleDropdown) setToggleDropdown(true);
+            setUserInput(e.target.value);
+          }}
           value={userInput}
           onKeyDown={(e) => {
             switch (e.key) {
@@ -103,6 +108,10 @@ const Typeahead = ({ suggestions, handleSelect }) => {
                 }
                 return;
               }
+              case "Escape": {
+                setToggleDropdown(false);
+                return;
+              }
               default: {
                 return;
               }
@@ -114,7 +123,7 @@ const Typeahead = ({ suggestions, handleSelect }) => {
         </BtnWrapper>
       </FormWrapper>
 
-      {listMatchedSuggestions.length > 0 && (
+      {listMatchedSuggestions.length > 0 && toggleDropdown && (
         <List>
           {listMatchedSuggestions.map((matchedSuggestion, index) => (
             <Suggestion
